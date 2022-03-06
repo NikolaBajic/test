@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <interviewLabel>Booked Job Original GOV {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Booked Job Sales GOV</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Booked_Job_Original_GOV</name>
+        <label>Update Booked Job Original GOV</label>
+        <locationX>452</locationX>
+        <locationY>66</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Opportunity_Line_Item_ID__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>varOppLineItemID</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Sales_GOV__c</field>
+            <value>
+                <elementReference>varLockedGOV</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Booked_Job__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Update_Booked_Job_Original_GOV</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>varLockedGOV</name>
+        <dataType>Currency</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>varOppLineItemID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>Update_ownerships</name>
+        <label>Update ownerships</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Move_Coach_Owner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>MovecoachOwnerId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.ISR_Owner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ISROwnerID</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.CSM_Owner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CSMOwnerID</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Did_any_ownerships_change</name>
+        <label>Did any ownerships change?</label>
+        <locationX>182</locationX>
+        <locationY>311</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Ownership_changed_updated</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>MovecoachOwnerId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Move_Coach_Owner__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CSMOwnerID</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.CSM_Owner__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ISROwnerID</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.ISR_Owner__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_ownerships</targetReference>
+            </connector>
+            <label>Ownership changed/updated</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>CSMOwnerID</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.CSM_Owner__c}),&quot;&quot;,IF({!$Record.CSM_Owner__r.IsActive},{!$Record.CSM_Owner__c}, &quot;0056g000005Uo5JAAS&quot;))</expression>
+    </formulas>
+    <formulas>
+        <name>ISROwnerID</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.ISR_Owner__c}),&quot;&quot;,IF({!$Record.ISR_Owner__r.IsActive},{!$Record.ISR_Owner__c}, &quot;0056g000005Uo5JAAS&quot;))</expression>
+    </formulas>
+    <formulas>
+        <name>MovecoachOwnerId</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!$Record.Move_Coach_Owner__c}),&quot;&quot;,IF({!$Record.Move_Coach_Owner__r.IsActive},{!$Record.Move_Coach_Owner__c}, &quot;0056g000005Uo5JAAS&quot;))</expression>
+    </formulas>
+    <interviewLabel>Change Opportunity/MC/ISR/CSM Owner if user is inactive {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Change Opportunity/MC/ISR/CSM Owner if user is inactive</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Did_any_ownerships_change</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed - Lost</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>0126g000000GrzYAAS</stringValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

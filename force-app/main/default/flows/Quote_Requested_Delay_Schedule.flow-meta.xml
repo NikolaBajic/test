@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <description>daily schedule to get quotes requested more than 3 days ago and create reminder</description>
+    <interviewLabel>Quote Requested Delay Schedule {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Quote Requested Delay Schedule</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Quote_Requested_Schedule</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Quote_Request_Delay__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Quote Requested</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Primary_Contact__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ISR_Owner__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2020-09-23</startDate>
+            <startTime>01:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <description>runs once a day to check for quotes requested more than 3 days ago</description>
+        <name>Quote_Requested_Schedule</name>
+        <label>Quote Requested Schedule</label>
+        <locationX>565</locationX>
+        <locationY>158</locationY>
+        <flowName>Quote_Requested_Stale</flowName>
+        <inputAssignments>
+            <name>AssignTo</name>
+            <value>
+                <elementReference>$Record.ISR_Owner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>VarOpportunityID</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>varTEName</name>
+            <value>
+                <elementReference>$Record.Primary_Contact__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

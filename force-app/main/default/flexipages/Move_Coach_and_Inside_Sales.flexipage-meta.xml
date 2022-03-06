@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>kanBanId</name>
+                    <value>a0h6g0000044CAJAA2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                    <value>a0h6g0000044CAJAA2</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>style</name>
+                    <value>position: relative;</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>variables</name>
+                </componentInstanceProperties>
+                <componentName>FLX_KB:KanBanComponent</componentName>
+                <identifier>FLX_KB_KanBanComponent1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>kanBanId</name>
+                    <value>a0h6g0000044CJkAAM</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>recordId</name>
+                    <value>a0h6g0000044CJkAAM</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>style</name>
+                    <value>position: relative; height: calc(100vh - 10rem);</value>
+                </componentInstanceProperties>
+                <componentName>FLX_KB:KanBanComponent</componentName>
+                <identifier>FLX_KB_KanBanComponent2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>Move Coach and Inside Sales</masterLabel>
+    <template>
+        <name>flexipage:defaultAppHomeTemplate</name>
+    </template>
+    <type>AppPage</type>
+</FlexiPage>
